@@ -154,7 +154,6 @@ class ConfirmEmailView(APIView):
     def get(self, *args, **kwargs):
         self.object = confirmation = self.get_object()
         confirmation.confirm(self.request)
-        # A React Router Route will handle the failure scenario
         return Response(status.HTTP_202_ACCEPTED)
 
     def get_object(self, queryset=None):
@@ -166,7 +165,6 @@ class ConfirmEmailView(APIView):
             try:
                 email_confirmation = queryset.get(key=key.lower())
             except EmailConfirmation.DoesNotExist:
-                # A React Router Route will handle the failure scenario
                 return Response(status.HTTP_406_NOT_ACCEPTABLE)
         return email_confirmation
 
