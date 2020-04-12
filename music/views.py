@@ -10,6 +10,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from rest_framework.decorators import api_view
 from rest_framework.views import APIView
+from allauth.account.models import EmailAddress
 
 from .decorators import validate_request_data
 from .models import Song
@@ -106,16 +107,22 @@ class LoginView(CreateAPIView):
         user = authenticate(request,username=username,password=password)
 
         if user is not None:
-            login(request,user)
-            serializer = TokenSerializer(
-                data={
-                    "token": jwt_encode_handler(
-                        jwt_payload_handler(user)
-                    )
-                }
-            )
-            serializer.is_valid()
-            return Response(serializer.data)
+            if EmailAddress.objects.filter(user= user, verified= True).exists():
+
+                login(request,user)
+                serializer = TokenSerializer(
+                    data={
+                        "token": jwt_encode_handler(
+                            jwt_payload_handler(user)
+                        )
+                    }
+                )
+                serializer.is_valid()
+                return Response(serializer.data)
+            else:
+                return Response(status= status.HTTP_400_BAD_REQUEST,data={
+                    "detail":"Email not confirmed yet, check your email address to confirm!"
+                })
         return Response(status=status.HTTP_401_UNAUTHORIZED)
 
 
