@@ -66,3 +66,4 @@ urllib3==1.25.8
 wcwidth==0.1.7
 wincertstore==0.2
 zipp==0.6.0
+python-dotenv
