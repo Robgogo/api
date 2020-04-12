@@ -107,7 +107,8 @@ class LoginView(CreateAPIView):
         user = authenticate(request,username=username,password=password)
 
         if user is not None:
-            if EmailAddress.objects.filter(user= user, verified= True).exists():
+            #remove or True
+            if EmailAddress.objects.filter(user= user, verified= True).exists() or True:
 
                 login(request,user)
                 serializer = TokenSerializer(

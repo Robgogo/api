@@ -4,6 +4,8 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 from rest_framework.test import APITestCase, APIClient
 from rest_framework.views import status
+from allauth.account.models import EmailAddress
+
 import json
 
 from .models import Song
@@ -59,13 +61,21 @@ class BaseViewTest(APITestCase):
     def setUp(self):
         # add test data
 
-        self.user = User.objects.create_superuser(
+        self.user = User.objects.create_user(
             username="test_user",
             email="test@mail.com",
             password="testing",
             first_name="test",
             last_name="user",
+            
         )
+
+        self.email_con = EmailAddress.objects.get_users_for(self.user.email)
+        print("Emaail con",self.email_con)
+        # self.user.is_confirmed = True
+        # self.user.save()
+        # print(self.user.is_confirmed)
+        
         self.create_song("like glue", "sean paul")
         self.create_song("simple song", "konshens")
         self.create_song("love is wicked", "brick and lace")
