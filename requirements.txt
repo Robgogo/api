@@ -62,7 +62,7 @@ sqlparse==0.3.0
 stevedore==1.30.1
 toml==0.10.0
 traitlets==4.3.2
-urllib3==1.25.8
+urllib3==1.26.5
 wcwidth==0.1.7
 wincertstore==0.2
 zipp==0.6.0
