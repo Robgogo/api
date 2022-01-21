@@ -30,7 +30,7 @@ gunicorn==19.9.0
 idna==2.9
 importlib-metadata==0.19
 ipdb==0.12.2
-ipython==7.7.0
+ipython==7.16.3
 ipython-genutils==0.2.0
 jedi==0.15.1
 Markdown==3.2.1
